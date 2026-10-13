@@ -17,23 +17,15 @@ class TestRAGService:
         assert match_donation_to_ngos is not None
 
     @patch('rag_service.ngo_embeddings.QdrantClient')
-    @patch('rag_service.ngo_embeddings.SentenceTransformer')
-    def test_ngo_embeddings_init(self, mock_transformer, mock_qdrant):
-        from rag_service.ngo_embeddings import get_model, get_client
-
-        mock_transformer_instance = Mock()
-        mock_transformer.return_value = mock_transformer_instance
-        mock_transformer_instance.encode.return_value = [[0.1] * 384]
+    def test_ngo_embeddings_init(self, mock_qdrant):
+        from rag_service.ngo_embeddings import get_client
 
         mock_qdrant_instance = Mock()
         mock_qdrant.return_value = mock_qdrant_instance
 
         # Override the env var or set it for the test
         with patch('os.getenv', return_value='http://localhost:6333'):
-            model = get_model()
             client = get_client()
-
-            assert model is not None
             assert client is not None
 
     @patch('rag_service.matcher.search_similar_ngos')

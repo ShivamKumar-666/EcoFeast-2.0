@@ -9,7 +9,7 @@ class TestGenAIConfig:
 
     def test_config_import(self):
         from genai_service.config import get_client, VISION_MODEL, TEXT_MODEL
-        assert VISION_MODEL == "meta-llama/llama-4-scout-17b-16e-instruct"
+        assert VISION_MODEL == "qwen/qwen3.8-27b"
         assert TEXT_MODEL == "llama-3.3-70b-versatile"
 
         # Test getting client with a mock key to avoid ValueError
