@@ -1,8 +1,7 @@
 """
 Tests for GenAI Service: Vision, Chat, Explainer.
 """
-import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 
 
 class TestGenAIConfig:
@@ -12,7 +11,7 @@ class TestGenAIConfig:
         from genai_service.config import get_client, VISION_MODEL, TEXT_MODEL
         assert VISION_MODEL == "meta-llama/llama-4-scout-17b-16e-instruct"
         assert TEXT_MODEL == "llama-3.3-70b-versatile"
-        
+
         # Test getting client with a mock key to avoid ValueError
         with patch('os.getenv', return_value='fake_key'):
             client = get_client()
@@ -33,7 +32,8 @@ class TestVisionIntake:
         mock_client = Mock()
         mock_get_client.return_value = mock_client
         mock_response = Mock()
-        mock_response.choices = [Mock(message=Mock(content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
+        mock_response.choices = [Mock(message=Mock(
+            content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
         mock_client.chat.completions.create.return_value = mock_response
 
         result = extract_from_image(b"fake_image_data")
@@ -57,7 +57,8 @@ class TestChatIntake:
         mock_client = Mock()
         mock_get_client.return_value = mock_client
         mock_response = Mock()
-        mock_response.choices = [Mock(message=Mock(content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
+        mock_response.choices = [Mock(message=Mock(
+            content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
         mock_client.chat.completions.create.return_value = mock_response
 
         result = extract_from_text("I have 5kg of fresh rice")
@@ -81,7 +82,8 @@ class TestExplainerLLM:
         mock_client = Mock()
         mock_get_client.return_value = mock_client
         mock_response = Mock()
-        mock_response.choices = [Mock(message=Mock(content='The food is predicted fresh because it was stored in refrigerator.'))]
+        mock_response.choices = [
+            Mock(message=Mock(content='The food is predicted fresh because it was stored in refrigerator.'))]
         mock_client.chat.completions.create.return_value = mock_response
 
         shap_features = [{'feature': 'storage_condition_refrigerated', 'impact': 0.5, 'direction': 'positive'}]

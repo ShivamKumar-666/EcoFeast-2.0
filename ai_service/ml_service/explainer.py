@@ -5,7 +5,6 @@ Returns top contributing features for each prediction.
 
 import os
 import logging
-import numpy as np
 import xgboost as xgb
 import joblib
 from typing import Dict, List, Optional
@@ -16,6 +15,7 @@ logger = logging.getLogger(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'models', 'freshness_xgb_v1.json')
 ENCODER_PATH = os.path.join(BASE_DIR, 'models', 'feature_builder_v1.pkl')
+
 
 class FreshnessExplainer:
     def __init__(self):

@@ -2,6 +2,9 @@
 GenAI API views — Vision intake, Chat intake, SHAP explanation.
 """
 
+from ml_service.explainer import get_explainer
+from .chat_intake import extract_from_text
+from .vision_intake import extract_from_image
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
@@ -9,10 +12,6 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 import logging
 logger = logging.getLogger(__name__)
-
-from .vision_intake import extract_from_image
-from .chat_intake import extract_from_text
-from ml_service.explainer import get_explainer
 
 
 class VisionIntakeView(APIView):
@@ -29,16 +28,16 @@ class VisionIntakeView(APIView):
             )
 
         # Basic security checks
-        MAX_FILE_SIZE = 10 * 1024 * 1024 # 10 MB
+        MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
         if image_file.size > MAX_FILE_SIZE:
-             return Response(
+            return Response(
                 {"success": False, "error": "File size exceeds 10MB limit"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        
+
         valid_mime_types = ['image/jpeg', 'image/png', 'image/webp']
         if image_file.content_type not in valid_mime_types:
-             return Response(
+            return Response(
                 {"success": False, "error": f"Invalid file type. Allowed: {', '.join(valid_mime_types)}"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -70,7 +69,7 @@ class ChatIntakeView(APIView):
         try:
             result = extract_from_text(text)
             return Response(result, status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(
                 {"success": False, "error": "An error occurred while processing the text."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -116,7 +115,7 @@ class SHAPExplanationView(APIView):
                 "explanation": explanation,
                 "shap_features": shap_features,
             }, status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(
                 {"success": False, "error": "An error occurred while generating the explanation."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

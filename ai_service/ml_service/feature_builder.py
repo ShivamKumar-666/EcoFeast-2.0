@@ -5,7 +5,7 @@ Eliminates train/serve skew — both trainer and predictor use this exact class.
 
 import pandas as pd
 import numpy as np
-from typing import Dict, List, Optional
+from typing import Dict, List
 from dataclasses import dataclass
 
 
@@ -107,12 +107,12 @@ class FeatureBuilder:
         if self.target_encoder is None:
             return np.array(['Fresh', 'Medium', 'Spoiled'])
         return self.target_encoder.classes_
-        
+
     @property
     def feature_names(self) -> List[str]:
         """Alias for feature_cols to maintain backward compatibility."""
         return self.feature_cols
-        
+
     def get_feature_names(self) -> List[str]:
         """Alias for feature_cols to maintain backward compatibility."""
         return self.feature_cols

@@ -4,9 +4,7 @@ Fourth step — the key autonomy behavior.
 """
 
 import logging
-from datetime import timedelta
 from django.utils import timezone
-from typing import Dict
 from .state import DonationState
 
 logger = logging.getLogger(__name__)
@@ -100,7 +98,7 @@ def logistics_agent(state: DonationState) -> DonationState:
             state["status"] = "failed"
             state["error_message"] = f"Max escalations ({max_escalations}) reached"
             trail_entry["action"] = "max_escalations_reached"
-            logger.warning(f"LOGISTICS: Max escalations reached")
+            logger.warning("LOGISTICS: Max escalations reached")
         else:
             state["needs_escalation"] = True
             state["current_ngo_index"] = current_index + 1

@@ -1,19 +1,22 @@
 from django.urls import path
-from django.shortcuts import redirect # <--- Add this import
+from django.shortcuts import redirect  # <--- Add this import
 from .views import (
-    CreateDonationView, 
-    ListDonationsView, 
+    CreateDonationView,
+    ListDonationsView,
     DonationUpdateView,
-    donor_dashboard_view, 
-    ngo_dashboard_view, 
+    donor_dashboard_view,
+    ngo_dashboard_view,
     map_dashboard_view
 )
 
 # 🟢 Helper function to catch the "Ghost" URL
+
+
 def fix_dashboard_redirect(request):
     if request.user.role == 'ngo':
         return redirect('ngo-dashboard-ui')
     return redirect('donor-dashboard-ui')
+
 
 urlpatterns = [
     # API Endpoints
@@ -27,5 +30,5 @@ urlpatterns = [
     path('map/', map_dashboard_view, name='map-dashboard'),
 
     # 🟢 SAFETY NET: Catch the "dashboard/" error and fix it automatically
-    path('dashboard/', fix_dashboard_redirect), 
+    path('dashboard/', fix_dashboard_redirect),
 ]

@@ -28,7 +28,8 @@ class Migration(migrations.Migration):
                 ('completed_at', models.DateTimeField(blank=True, null=True)),
                 ('duration_seconds', models.FloatField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('donation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='agent_runs', to='donations.donation')),
+                ('donation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                 related_name='agent_runs', to='donations.donation')),
             ],
             options={
                 'ordering': ['-created_at'],

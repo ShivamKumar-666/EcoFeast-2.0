@@ -71,7 +71,7 @@ def embed_text(text: str) -> List[float]:
     """Convert text to embedding vector using HuggingFace Inference API."""
     hf_key = os.getenv("HF_API_KEY", "")
     headers = {"Authorization": f"Bearer {hf_key}"} if hf_key else {}
-    
+
     try:
         response = requests.post(HF_API_URL, headers=headers, json={"inputs": text}, timeout=15)
         if response.status_code == 200:
@@ -83,7 +83,7 @@ def embed_text(text: str) -> List[float]:
             logger.error(f"HF API returned status {response.status_code}: {response.text}")
     except Exception as e:
         logger.error(f"HF API Network Error: {e}")
-        
+
     return [0.0] * VECTOR_DIMENSION
 
 

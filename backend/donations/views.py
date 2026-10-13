@@ -1,11 +1,9 @@
 from rest_framework import generics, permissions
 from .models import Donation
 from .serializers import DonationSerializer
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from rest_framework.response import Response
-from rest_framework import status
 from django.utils import timezone
 
 import os
@@ -15,13 +13,17 @@ import logging
 logger = logging.getLogger(__name__)
 
 # --- HTML VIEWS (Protected) ---
+
+
 @login_required
 def donor_dashboard_view(request):
     return render(request, 'donor_dashboard.html')
 
+
 @login_required
 def ngo_dashboard_view(request):
     return render(request, 'ngo_dashboard.html')
+
 
 @login_required
 def map_dashboard_view(request):
@@ -60,19 +62,15 @@ class CreateDonationView(generics.CreateAPIView):
                 score = data['prediction']['freshness_score']
                 label = data['prediction']['freshness_label']
                 confidence = data['prediction']['confidence']
-                shap_features = data.get('shap_explanation', [])
-                explanation_text = "" # Adjust as needed
             else:
                 logger.error(f"AI Service returned status code {response.status_code}: {response.text}")
                 raise ValueError("Failed to get prediction from AI Service")
-                
+
         except Exception as e:
             logger.error(f"ML API Error: {e}")
             score = 0
             label = "Unknown"
             confidence = None
-            shap_features = []
-            explanation_text = ""
 
         serializer.save(
             donor=self.request.user,
@@ -124,7 +122,7 @@ class DonationUpdateView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         if self.request.user.role not in ['ngo', 'shelter']:
             raise permissions.PermissionDenied("Only NGOs and Shelters can claim donations.")
-            
+
         instance = serializer.save()
 
         if self.request.data.get('status') == 'claimed':

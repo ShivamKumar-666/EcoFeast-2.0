@@ -14,17 +14,20 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='customuser',
             name='capability_document',
-            field=models.TextField(blank=True, default='', help_text='Free-text NGO profile for semantic matching. Auto-generated from fields above or written manually.'),
+            field=models.TextField(
+                blank=True, default='', help_text='Free-text NGO profile for semantic matching. Auto-generated from fields above or written manually.'),
         ),
         migrations.AddField(
             model_name='customuser',
             name='cultural_rules',
-            field=models.CharField(blank=True, default='', help_text='Cultural/religious constraints: no-beef, halal-only, kosher, etc.', max_length=500),
+            field=models.CharField(
+                blank=True, default='', help_text='Cultural/religious constraints: no-beef, halal-only, kosher, etc.', max_length=500),
         ),
         migrations.AddField(
             model_name='customuser',
             name='dietary_restrictions',
-            field=models.CharField(blank=True, default='', help_text='Comma-separated dietary rules: vegetarian, halal, jain, no-pork, etc.', max_length=500),
+            field=models.CharField(
+                blank=True, default='', help_text='Comma-separated dietary rules: vegetarian, halal, jain, no-pork, etc.', max_length=500),
         ),
         migrations.AddField(
             model_name='customuser',
@@ -34,12 +37,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='customuser',
             name='operating_hours',
-            field=models.CharField(blank=True, default='8:00-20:00', help_text='Operating hours: e.g. 8:00-20:00 or 24/7', max_length=200),
+            field=models.CharField(blank=True, default='8:00-20:00',
+                                   help_text='Operating hours: e.g. 8:00-20:00 or 24/7', max_length=200),
         ),
         migrations.AddField(
             model_name='customuser',
             name='reliability_score',
-            field=models.FloatField(default=80.0, help_text='Past pickup reliability (0-100). Updated by logistics agent.'),
+            field=models.FloatField(
+                default=80.0, help_text='Past pickup reliability (0-100). Updated by logistics agent.'),
         ),
         migrations.AddField(
             model_name='customuser',

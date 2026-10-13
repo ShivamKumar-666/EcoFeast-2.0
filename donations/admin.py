@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Donation
 
+
 @admin.register(Donation)
 class DonationAdmin(admin.ModelAdmin):
     list_display = ['food_name', 'donor', 'quantity_kg', 'freshness_label', 'freshness_score', 'status', 'created_at']
@@ -9,7 +10,7 @@ class DonationAdmin(admin.ModelAdmin):
     readonly_fields = ['freshness_score', 'freshness_label', 'confidence', 'created_at', 'claimed_at']
     list_per_page = 25
     ordering = ['-created_at']
-    
+
     fieldsets = (
         ('Basic Info', {
             'fields': ('donor', 'recipient', 'food_name', 'description', 'quantity_kg', 'pickup_address')

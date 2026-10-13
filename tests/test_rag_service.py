@@ -1,8 +1,7 @@
 """
 Tests for RAG Service: Embeddings, Matcher.
 """
-import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 
 
 class TestRAGService:
@@ -28,12 +27,12 @@ class TestRAGService:
 
         mock_qdrant_instance = Mock()
         mock_qdrant.return_value = mock_qdrant_instance
-        
+
         # Override the env var or set it for the test
         with patch('os.getenv', return_value='http://localhost:6333'):
             model = get_model()
             client = get_client()
-            
+
             assert model is not None
             assert client is not None
 
@@ -44,7 +43,7 @@ class TestRAGService:
         mock_search.return_value = [
             {'ngo_id': 1, 'score': 0.85}
         ]
-        
+
         donation_data = {
             'food_name': 'Test Biryani',
             'food_type': 'Non-Vegetarian',
@@ -67,7 +66,7 @@ class TestRAGService:
             mock_ngo.capacity_kg = 50
             mock_ngo.reliability_score = 80
             mock_ngo.total_collections = 5
-            
+
             mock_user_model.objects.get.return_value = mock_ngo
 
             results = match_donation_to_ngos(donation_data)

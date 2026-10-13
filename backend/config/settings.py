@@ -3,6 +3,8 @@ Django settings for config project.
 EcoFeast 2.0 — Environment-based configuration.
 """
 
+import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 import os
 import logging
@@ -14,11 +16,11 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-from django.core.exceptions import ImproperlyConfigured
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY or 'your_key_here' in SECRET_KEY.lower():
-    raise ImproperlyConfigured("SECRET_KEY must be securely set in the environment and must not be a default/insecure key.")
+    raise ImproperlyConfigured(
+        "SECRET_KEY must be securely set in the environment and must not be a default/insecure key.")
 
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
@@ -79,13 +81,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # Database — PostgreSQL via dj-database-url, falls back to SQLite
-import dj_database_url
 
 _db_url = os.getenv('DATABASE_URL', '')
 if _db_url and 'postgres' in _db_url:
     DATABASES = {
         'default': dj_database_url.config(
-            default=_db_url.replace('postgres://', 'postgresql://'), 
+            default=_db_url.replace('postgres://', 'postgresql://'),
             conn_max_age=600
         )
     }

@@ -1,8 +1,7 @@
 """
 Tests for Agent Pipeline: State, Intake, Verification, Matching, Logistics, Orchestrator.
 """
-import pytest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import patch, MagicMock
 
 
 class TestDonationState:
@@ -33,7 +32,8 @@ class TestIntakeAgent:
         mock_pred.freshness_label = 'Fresh'
         mock_pred.confidence = 92.0
         mock_get_predictor.return_value.predict.return_value = mock_pred
-        mock_get_explainer.return_value.explain.return_value = [{'feature': 'storage_condition_refrigerated', 'impact': 0.5, 'direction': 'positive'}]
+        mock_get_explainer.return_value.explain.return_value = [
+            {'feature': 'storage_condition_refrigerated', 'impact': 0.5, 'direction': 'positive'}]
 
         state = {
             'donation_id': None, 'donor_id': None, 'donor_username': 'test',
@@ -329,10 +329,10 @@ class TestLogisticsAgent:
             {'ngo_id': 1, 'ngo_name': 'NGO One', 'reliability_score': 50},
             {'ngo_id': 2, 'ngo_name': 'NGO Two', 'reliability_score': 80},
         ], 'current_ngo_index': 0, 'escalation_count': 0, 'max_escalations': 3,
-                 'claim_sent': False, 'claim_accepted': False,
-                 'needs_escalation': False, 'assigned_ngo_id': None,
-                 'assigned_ngo_name': '', 'status': '', 'error_message': '',
-                 'decision_trail': []}
+            'claim_sent': False, 'claim_accepted': False,
+            'needs_escalation': False, 'assigned_ngo_id': None,
+            'assigned_ngo_name': '', 'status': '', 'error_message': '',
+            'decision_trail': []}
 
         result = logistics_agent(state)
 

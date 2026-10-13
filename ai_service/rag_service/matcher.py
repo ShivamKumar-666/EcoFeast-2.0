@@ -6,7 +6,7 @@ Combines RAG retrieval with business logic for optimal matching.
 import logging
 import math
 from typing import Dict, List, Optional
-from .ngo_embeddings import search_similar_ngos, upsert_ngo, ensure_collection
+from .ngo_embeddings import search_similar_ngos, upsert_ngo
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +19,7 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1)
 
-    a = (math.sin(dlat / 2) ** 2 +
-         math.cos(lat1_r) * math.cos(lat2_r) * math.sin(dlon / 2) ** 2)
+    a = (math.sin(dlat / 2) ** 2 + math.cos(lat1_r) * math.cos(lat2_r) * math.sin(dlon / 2) ** 2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     return R * c
@@ -113,7 +112,7 @@ def match_donation_to_ngos(
             from django.contrib.auth import get_user_model
             User = get_user_model()
             ngo = User.objects.get(id=ngo_id, role__in=["ngo", "shelter"])
-        except Exception: # Catch Exception since User.DoesNotExist might not be defined if get_user_model fails
+        except Exception:  # Catch Exception since User.DoesNotExist might not be defined if get_user_model fails
             continue
 
         # Distance score
@@ -139,12 +138,12 @@ def match_donation_to_ngos(
         reliability_score = getattr(ngo, 'reliability_score', 80) / 100.0
 
         # Combined score (weighted)
-        combined_score = (
-            0.40 * semantic_score +      # How well NGO capabilities match
-            0.25 * distance_score +       # How close the NGO is
-            0.15 * capacity_score +       # Whether NGO can handle the quantity
-            0.20 * reliability_score      # Past reliability
-        )
+        combined_score = sum([
+            0.40 * semantic_score,  # How well NGO capabilities match
+            0.25 * distance_score,  # How close the NGO is
+            0.15 * capacity_score,  # Whether NGO can handle the quantity
+            0.20 * reliability_score,  # Past reliability
+        ])
 
         matched_ngos.append({
             "ngo_id": ngo_id,
@@ -174,6 +173,8 @@ def sync_ngo_to_vector_store(ngo_id: int) -> bool:
     Sync a single NGO's profile to Qdrant.
     Returns True if successful.
     """
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
     try:
         ngo = User.objects.get(id=ngo_id, role__in=["ngo", "shelter"])
     except User.DoesNotExist:
@@ -213,6 +214,8 @@ def sync_ngo_to_vector_store(ngo_id: int) -> bool:
 
 def sync_all_ngos() -> Dict[str, int]:
     """Sync all NGO profiles to Qdrant. Returns counts."""
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
     ngos = User.objects.filter(role__in=["ngo", "shelter"])
 
     success = 0

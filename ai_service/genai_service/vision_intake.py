@@ -5,7 +5,6 @@ Uses Groq's Llama 4 Scout vision model.
 
 import base64
 import logging
-from typing import Optional
 from .config import get_client, VISION_MODEL
 
 logger = logging.getLogger(__name__)

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterUserView, landing_view, login_view, register_view, logout_view,UserProfileUpdateView
+from .views import RegisterUserView, landing_view, login_view, register_view, logout_view, UserProfileUpdateView
 
 urlpatterns = [
     # API ENDPOINT (For the Register Form to talk to)

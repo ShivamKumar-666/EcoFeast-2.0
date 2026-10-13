@@ -7,7 +7,6 @@ import os
 import json
 import logging
 import pandas as pd
-import numpy as np
 import joblib
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
@@ -145,10 +144,10 @@ def train_model(test_size: float = 0.2, random_state: int = 42) -> dict:
     logger.info(f"Metrics saved to {METRICS_PATH}")
 
     # Print summary
-    logger.info(f"\n{'='*50}")
+    logger.info(f"\n{'=' * 50}")
     logger.info(f"Accuracy: {metrics['accuracy']:.4f}")
     logger.info(f"ROC-AUC (weighted): {metrics['roc_auc_weighted']:.4f}")
-    logger.info(f"\nClassification Report:")
+    logger.info("\nClassification Report:")
     logger.info(classification_report(y_test, y_pred, target_names=builder.classes))
 
     return metrics

@@ -8,7 +8,6 @@ import os
 import json
 import logging
 import pandas as pd
-import numpy as np
 import xgboost as xgb
 import joblib
 from sklearn.model_selection import train_test_split
@@ -111,20 +110,20 @@ def evaluate() -> dict:
         json.dump(evaluation, f, indent=2)
 
     # Print summary
-    print(f"\n{'='*60}")
-    print(f"ECOFEAST FRESHNESS MODEL — EVALUATION REPORT")
-    print(f"{'='*60}")
+    print(f"\n{'=' * 60}")
+    print("ECOFEAST FRESHNESS MODEL — EVALUATION REPORT")
+    print(f"{'=' * 60}")
     print(f"Accuracy:       {report['accuracy']:.4f}")
     print(f"ROC-AUC (wtd):  {auc_weighted:.4f}")
     print(f"ROC-AUC (macro): {auc_macro:.4f}")
     print(f"Test samples:   {len(y_test)}")
-    print(f"\nPer-Class Metrics:")
-    print(f"{'-'*60}")
+    print("\nPer-Class Metrics:")
+    print(f"{'-' * 60}")
     for cls in classes:
         m = evaluation['per_class'][cls]
         print(f"  {cls:12s}  P={m['precision']:.3f}  R={m['recall']:.3f}  F1={m['f1_score']:.3f}  N={m['support']}")
-    print(f"\nConfusion Matrix:")
-    print(f"{'-'*60}")
+    print("\nConfusion Matrix:")
+    print(f"{'-' * 60}")
     print(f"  Predicted >>  {'  '.join(classes)}")
     for i, cls in enumerate(classes):
         print(f"  {cls:12s}  {'  '.join(f'{v:4d}' for v in cm[i])}")

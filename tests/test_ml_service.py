@@ -67,7 +67,7 @@ class TestFeatureBuilder:
 
     def test_feature_builder_feature_names(self):
         from ml_service.feature_builder import FeatureBuilder
-        fb = FeatureBuilder()
+        FeatureBuilder()
         # This will be tested after we add the alias property
         # For now, it will fail until the alias is added
         # names = fb.feature_names
@@ -109,7 +109,7 @@ class TestPredictor:
             'time_since_cooking': 2,
             'quantity_kg': 5,
         })
-        
+
         result_dict = result.to_dict()
         assert 'freshness_score' in result_dict
         assert 'freshness_label' in result_dict
@@ -134,7 +134,7 @@ class TestPredictor:
             'time_since_cooking': 2,
             'quantity_kg': 5,
         })
-        
+
         probas = list(result.probabilities.values())
         assert len(probas) == 3  # 3 classes
         assert abs(sum(probas) - 1.0) < 0.01
@@ -151,7 +151,7 @@ class TestExplainer:
         from ml_service.explainer import get_explainer
 
         explainer = get_explainer()
-        
+
         if not explainer._loaded:
             pytest.skip("Model not available to test explainer")
 

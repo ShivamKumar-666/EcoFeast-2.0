@@ -42,7 +42,7 @@ class MatchDonationView(APIView):
                 "count": len(matches),
             }, status=status.HTTP_200_OK)
 
-        except Exception as e:
+        except Exception:
             return Response(
                 {"success": False, "error": "An error occurred during matching."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -60,7 +60,7 @@ class SyncNGOsView(APIView):
                 "success": True,
                 "result": result,
             }, status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(
                 {"success": False, "error": "An error occurred while syncing NGOs."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -78,7 +78,7 @@ class SyncSingleNGOView(APIView):
                 "success": success,
                 "ngo_id": ngo_id,
             }, status=status.HTTP_200_OK)
-        except Exception as e:
+        except Exception:
             return Response(
                 {"success": False, "error": "An error occurred while syncing the NGO."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 
 class FreshnessPredictor:
     @staticmethod
@@ -10,12 +8,12 @@ class FreshnessPredictor:
         """
         # 1. Start with a perfect score
         score = 100.0
-        
+
         # --- INPUTS ---
         # Get values safely, defaulting to 0 if missing
         hours_cooked = float(data.get('time_since_cooking_hours', 0) or 0)
         hours_stored = float(data.get('storage_time_hours', 0) or 0)
-        temp = float(data.get('temperature', 25)) # Default 25°C
+        temp = float(data.get('temperature', 25))  # Default 25°C
         condition = data.get('storage_condition', 'room_temperature')
         food_type = data.get('food_type', 'Vegetarian')
 
@@ -37,10 +35,10 @@ class FreshnessPredictor:
         # Rule 3: Storage Condition
         if condition == 'outside' or condition == 'room_temperature':
             # Room temp degrades faster
-            score -= 10 
+            score -= 10
         elif condition == 'refrigerated':
             # Fridge preserves freshness (Bonus!)
-            score += 15 
+            score += 15
         elif condition == 'heated':
             # Keeping it hot is good for short term, bad for long term
             if total_hours > 4:
@@ -48,15 +46,15 @@ class FreshnessPredictor:
 
         # Rule 4: Food Type Sensitivity
         if food_type == 'Non-Veg':
-            score -= 15 # Meat spoils faster than veg
+            score -= 15  # Meat spoils faster than veg
         elif food_type == 'Vegan':
             score += 5  # Veggies last longer
 
         # --- FINAL CALCULATIONS ---
-        
+
         # Ensure score stays between 0 and 100
         score = max(0, min(100, score))
-        
+
         # Determine Label
         if score >= 75:
             label = "Fresh 🟢"
@@ -66,6 +64,6 @@ class FreshnessPredictor:
             label = "Spoiled 🔴"
 
         return {
-            "freshness_score": int(score), # Return as integer (e.g., 85)
+            "freshness_score": int(score),  # Return as integer (e.g., 85)
             "freshness_label": label
         }

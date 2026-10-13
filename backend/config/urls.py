@@ -6,6 +6,6 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/donations/', include('donations.urls')),
 
-    
+
     path('', include('users.urls')),
 ]

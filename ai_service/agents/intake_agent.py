@@ -5,7 +5,6 @@ First step in the pipeline.
 
 import logging
 from django.utils import timezone
-from typing import Dict
 from .state import DonationState
 
 logger = logging.getLogger(__name__)

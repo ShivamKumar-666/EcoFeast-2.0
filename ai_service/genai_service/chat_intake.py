@@ -5,7 +5,6 @@ Uses Groq's Llama 3.3 70B with JSON mode for structured extraction.
 
 import json
 import logging
-from typing import Optional
 from .config import get_client, TEXT_MODEL
 
 logger = logging.getLogger(__name__)

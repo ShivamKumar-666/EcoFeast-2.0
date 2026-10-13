@@ -1,8 +1,6 @@
 """
 Tests for API endpoints across all services.
 """
-import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 
 class TestMLServiceAPI:
@@ -15,7 +13,7 @@ class TestMLServiceAPI:
         assert ExplainView is not None
 
     def test_predict_url(self):
-        from django.urls import resolve, reverse
+        from django.urls import resolve
         try:
             match = resolve('/api/ml/predict/')
             assert match.view_name is not None
@@ -23,7 +21,7 @@ class TestMLServiceAPI:
             pass
 
     def test_evaluate_url(self):
-        from django.urls import resolve, reverse
+        from django.urls import resolve
         try:
             match = resolve('/api/ml/evaluate/')
             assert match.view_name is not None

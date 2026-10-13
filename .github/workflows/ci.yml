@@ -73,7 +73,7 @@ jobs:
         run: python manage.py check
 
       - name: Run linting (flake8)
-        run: flake8 . --exclude=venv,env,.env,staticfiles,migrations,ml_service/models --max-line-length=120 --ignore=E501
+        run: flake8 . --exclude=venv,.venv,env,.env,staticfiles,migrations,ml_service/models --max-line-length=120 --ignore=E501
 
       - name: Run pytest
         run: |

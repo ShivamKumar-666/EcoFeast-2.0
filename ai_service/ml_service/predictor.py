@@ -6,7 +6,6 @@ Loads the trained model and FeatureBuilder for inference.
 import os
 import logging
 import numpy as np
-import pandas as pd
 import joblib
 import xgboost as xgb
 from typing import Dict, Optional, List

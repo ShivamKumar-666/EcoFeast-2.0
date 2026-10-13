@@ -1,8 +1,6 @@
 """
 Tests for Donation and AgentRun models.
 """
-import pytest
-from datetime import datetime, timezone
 from django.contrib.auth import get_user_model
 
 
@@ -88,7 +86,7 @@ class TestAgentRunModel:
         assert 'duration_seconds' in field_names
 
     def test_agentrun_donation_nullable(self):
-        from donations.models import AgentRun, Donation
+        from donations.models import AgentRun
         field = AgentRun._meta.get_field('donation')
         assert field.null is True
         assert field.blank is True
