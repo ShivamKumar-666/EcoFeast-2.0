@@ -31,9 +31,12 @@ class TestVisionIntake:
 
         mock_client = Mock()
         mock_get_client.return_value = mock_client
+        json_content = (
+            '{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, '
+            '"container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'
+        )
         mock_response = Mock()
-        mock_response.choices = [Mock(message=Mock(
-            content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
+        mock_response.choices = [Mock(message=Mock(content=json_content))]
         mock_client.chat.completions.create.return_value = mock_response
 
         result = extract_from_image(b"fake_image_data")
@@ -56,9 +59,12 @@ class TestChatIntake:
 
         mock_client = Mock()
         mock_get_client.return_value = mock_client
+        json_content = (
+            '{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, '
+            '"container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'
+        )
         mock_response = Mock()
-        mock_response.choices = [Mock(message=Mock(
-            content='{"food_name": "Test", "food_type": "Vegetarian", "estimated_quantity_kg": 5, "container_type": "plastic", "moisture_type": "dry", "texture": "soft", "cooking_method": "boiled"}'))]
+        mock_response.choices = [Mock(message=Mock(content=json_content))]
         mock_client.chat.completions.create.return_value = mock_response
 
         result = extract_from_text("I have 5kg of fresh rice")
