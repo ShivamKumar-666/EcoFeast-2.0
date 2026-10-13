@@ -1,0 +1,13 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.git/
+db.sqlite3
+.DS_Store
+.pytest_cache/
+ecofeast.egg-info/
+*.docx
+*.pdf
+system-design-architect.skill.zip
