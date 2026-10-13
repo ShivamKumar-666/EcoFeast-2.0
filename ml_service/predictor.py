@@ -15,6 +15,10 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, 'models')
+AI_SERVICE_MODEL_DIR = os.path.join(os.path.dirname(BASE_DIR), 'ai_service', 'ml_service', 'models')
+if not os.path.exists(os.path.join(MODEL_DIR, 'feature_builder_v1.pkl')) and os.path.exists(AI_SERVICE_MODEL_DIR):
+    MODEL_DIR = AI_SERVICE_MODEL_DIR
+
 MODEL_PATH = os.path.join(MODEL_DIR, 'freshness_xgb_v1.json')
 ENCODER_PATH = os.path.join(MODEL_DIR, 'feature_builder_v1.pkl')
 # Fallback paths (old model)

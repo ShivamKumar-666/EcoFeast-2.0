@@ -52,6 +52,9 @@ staticfiles/
 # ML Models & Large Binaries
 ml_service/models/*.json
 ml_service/models/*.pkl
+!ml_service/models/feature_builder_v1.pkl
+!ml_service/models/freshness_xgb_v1.json
+!ml_service/models/encoders.pkl
 donations/food_quality_model.pkl
 
 # Document drafts, archives, and college submissions
